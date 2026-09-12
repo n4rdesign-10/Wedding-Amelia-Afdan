@@ -633,6 +633,12 @@
             border-radius: 4px;
             margin-bottom: 12px;
             font-size: 0.85rem;
+            animation: ucapan-in 0.4s ease;
+        }
+
+        @keyframes ucapan-in {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .ucapan-header {
@@ -654,6 +660,11 @@
             background: var(--border-gold);
             color: #fff;
         }
+
+        /* Warna badge kehadiran (BARU) */
+        .badge-status.hadir { background: rgba(37, 211, 102, 0.25); color: #6ee7a0; }
+        .badge-status.tidak-hadir { background: rgba(239, 68, 68, 0.25); color: #fca5a5; }
+        .badge-status.ragu { background: var(--border-gold); color: var(--accent-light); }
 
         .footer {
             padding: 50px 20px;
@@ -685,7 +696,7 @@
 
     <!-- Audio Element -->
     <audio id="bg-music" loop>
-        <source src="https://pdftourl.net/audio/1789209360067-c784a62a-32ac-4184-b04f-6e8d795b99a0.mp3" type="audio/mpeg">
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
     </audio>
 
     <button class="audio-btn" onclick="toggleAudio()">
@@ -714,7 +725,7 @@
             </div>
         </section>
 
-        <!-- SLIDER RESTU ORANG TUA (POSISI BARU DI SINI) -->
+        <!-- SLIDER RESTU ORANG TUA -->
         <section class="section" style="background-color: var(--card-bg);">
             <h2 class="section-title" data-aos="fade-up">Restu Orang Tua</h2>
             <p class="section-subtitle" data-aos="fade-up">Doa & Pesan Untuk Ananda</p>
@@ -824,7 +835,7 @@
                 </div>
 
                 <div class="timeline-item" data-aos="fade-up">
-                    <div class="timeline-badge"><i class="fas fa-dove"></i></div>
+                    <div class="timeline-badge"><i class="fas fa-church"></i></div>
                     <div class="timeline-card">
                         <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=600" alt="Pernikahan" class="timeline-img">
                         <div class="timeline-date">Oktober 2026</div>
@@ -976,7 +987,7 @@
                 <form id="rsvp-form" onsubmit="handleFormSubmit(event)">
                     <div class="form-group">
                         <label for="nama">Nama Lengkap</label>
-                        <input type="text" id="nama" class="form-control" placeholder="Masukkan nama Anda" required>
+                        <input type="text" id="nama" class="form-control" placeholder="Masukkan nama Anda" maxlength="50" required>
                     </div>
                     <div class="form-group">
                         <label for="status">Konfirmasi Kehadiran</label>
@@ -989,18 +1000,15 @@
                     </div>
                     <div class="form-group">
                         <label for="ucapan">Pesan & Ucapan Doa</label>
-                        <textarea id="ucapan" class="form-control" rows="4" placeholder="Tuliskan pesan & doa Anda..." required></textarea>
+                        <textarea id="ucapan" class="form-control" rows="4" placeholder="Tuliskan pesan & doa Anda..." maxlength="500" required></textarea>
                     </div>
                     <button type="submit" class="btn-gold" style="width: 100%; border-radius: 8px;">Kirim Ucapan</button>
                 </form>
 
                 <div class="ucapan-list" id="ucapan-container">
-                    <div class="ucapan-item">
-                        <div class="ucapan-header">
-                            <span class="ucapan-nama">Budi Santoso</span>
-                            <span class="badge-status">Hadir</span>
-                        </div>
-                        <p style="color: var(--text-muted); font-size: 0.8rem;">Selamat untuk Amelia & Afdan, semoga menjadi keluarga yang sakinah, mawaddah, warahmah!</p>
+                    <div id="ucapan-empty" style="text-align:center; color:var(--text-muted); font-size:0.8rem; padding:20px 10px;">
+                        <i class="far fa-comment-dots" style="font-size:1.4rem; color:var(--accent-gold); opacity:0.4; display:block; margin-bottom:8px;"></i>
+                        Belum ada ucapan. Jadilah yang pertama mengirim doa!
                     </div>
                 </div>
             </div>
@@ -1091,28 +1099,6 @@
             });
         }
 
-        // Form Submit RSVP
-        function handleFormSubmit(e) {
-            e.preventDefault();
-            const nama = document.getElementById('nama').value;
-            const status = document.getElementById('status').value;
-            const ucapan = document.getElementById('ucapan').value;
-            const container = document.getElementById('ucapan-container');
-
-            const item = document.createElement('div');
-            item.className = 'ucapan-item';
-            item.innerHTML = `
-                <div class="ucapan-header">
-                    <span class="ucapan-nama">${nama}</span>
-                    <span class="badge-status">${status}</span>
-                </div>
-                <p style="color: var(--text-muted); font-size: 0.8rem;">${ucapan}</p>
-            `;
-
-            container.prepend(item);
-            document.getElementById('rsvp-form').reset();
-        }
-
         // Countdown Timer Script
         const weddingDate = new Date("October 24, 2026 08:00:00").getTime();
 
@@ -1135,6 +1121,124 @@
                 document.getElementById("countdown").innerHTML = "<div style='color:var(--accent-gold)'>Acara Telah Berlangsung</div>";
             }
         }, 1000);
+    </script>
+
+    <!-- ===== UCAPAN ONLINE - FIREBASE (BARU) ===== -->
+    <!--
+        WAJIB: Update Rules di Firebase Console dulu!
+        console.firebase.google.com -> project "komentar" -> Build -> Realtime Database
+        -> tab Rules -> hapus semua -> paste rules -> Publish
+        (Rules lengkap ada di bawah file / lihat pesan sebelumnya)
+    -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+    <script>
+        // Config sama dengan undangan Raka - data otomatis terpisah (folder "wedding-comments")
+        var FIREBASE_CONFIG = {
+            apiKey: "AIzaSyABJy_Ot8TYQUTX_79h2EWwjcL8_lLRRw0",
+            authDomain: "komentar-d444e.firebaseapp.com",
+            databaseURL: "https://komentar-d444e-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "komentar-d444e",
+            storageBucket: "komentar-d444e.firebasestorage.app",
+            messagingSenderId: "208911159851",
+            appId: "1:208911159851:web:aa241697a7c3f241bb106e"
+        };
+
+        var weddingDB = null;
+        var WEDDING_LOCAL = true; // true = hanya tersimpan di perangkat (mode preview)
+
+        try {
+            if (FIREBASE_CONFIG.apiKey.indexOf('GANTI') === -1) {
+                firebase.initializeApp(FIREBASE_CONFIG);
+                weddingDB = firebase.database();
+                WEDDING_LOCAL = false;
+            } else {
+                console.warn('Firebase belum dikonfigurasi - ucapan hanya tersimpan lokal (preview).');
+            }
+        } catch (e) { console.warn('Firebase gagal dimuat:', e); }
+
+        var ucapanContainer = document.getElementById('ucapan-container');
+        var ucapanEmptyEl = document.getElementById('ucapan-empty');
+
+        function escapeHTML(s) {
+            return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');
+        }
+        function timeAgo(ts) {
+            var d = Math.floor((Date.now() - ts) / 1000);
+            if (d < 60) return 'Baru saja';
+            if (d < 3600) return Math.floor(d/60) + ' menit lalu';
+            if (d < 86400) return Math.floor(d/3600) + ' jam lalu';
+            if (d < 604800) return Math.floor(d/86400) + ' hari lalu';
+            return new Date(ts).toLocaleDateString('id-ID', { day:'numeric', month:'long', year:'numeric' });
+        }
+
+        function renderWeddingComment(data, prepend) {
+            if (!data || !data.name || !data.message) return;
+            if (String(data.name).trim().toLowerCase() === 'undefined' || String(data.message).trim().toLowerCase() === 'undefined') return;
+            if (ucapanEmptyEl) ucapanEmptyEl.style.display = 'none';
+
+            var badgeClass = 'ragu';
+            if (data.status === 'Hadir') badgeClass = 'hadir';
+            else if (data.status === 'Tidak Hadir') badgeClass = 'tidak-hadir';
+
+            var item = document.createElement('div');
+            item.className = 'ucapan-item';
+            item.innerHTML =
+                '<div class="ucapan-header">' +
+                    '<span class="ucapan-nama">' + escapeHTML(data.name) + '</span>' +
+                    '<span class="badge-status ' + badgeClass + '">' + escapeHTML(data.status || 'Hadir') + '</span>' +
+                '</div>' +
+                '<p style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 4px;">' + escapeHTML(data.message) + '</p>' +
+                '<div style="font-size: 0.65rem; color: var(--text-muted); opacity: 0.6;">' + timeAgo(data.time || Date.now()) + '</div>';
+
+            if (prepend) ucapanContainer.insertBefore(item, ucapanContainer.firstChild);
+            else ucapanContainer.appendChild(item);
+        }
+
+        // Muat ucapan yang sudah tersimpan
+        if (WEDDING_LOCAL) {
+            try {
+                var savedUcapan = JSON.parse(localStorage.getItem('ucapan-wedding') || '[]');
+                savedUcapan.sort(function(a,b){ return (b.time||0)-(a.time||0); });
+                savedUcapan.forEach(function(d){ renderWeddingComment(d, false); });
+            } catch(e) {}
+        } else {
+            weddingDB.ref('wedding-comments').limitToLast(100).on('child_added', function(snap) {
+                renderWeddingComment(snap.val(), true);
+            }, function(err) {
+                console.warn('Gagal memuat ucapan:', err);
+            });
+        }
+
+        // Form Submit RSVP versi online (menggantikan fungsi lama)
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            var nama = document.getElementById('nama').value.trim().slice(0, 50);
+            var status = document.getElementById('status').value || 'Hadir';
+            var ucapan = document.getElementById('ucapan').value.trim().slice(0, 500);
+            if (!nama || !ucapan) return;
+
+            var data = { name: nama, status: status, message: ucapan, time: Date.now() };
+
+            function finish(ok) {
+                if (ok) document.getElementById('rsvp-form').reset();
+                else alert('Gagal mengirim ucapan, coba lagi.');
+            }
+
+            if (weddingDB) {
+                weddingDB.ref('wedding-comments').push(data)
+                    .then(function(){ finish(true); })
+                    .catch(function(){ finish(false); });
+            } else {
+                try {
+                    var arr = JSON.parse(localStorage.getItem('ucapan-wedding') || '[]');
+                    arr.push(data);
+                    localStorage.setItem('ucapan-wedding', JSON.stringify(arr));
+                    renderWeddingComment(data, true);
+                    finish(true);
+                } catch(err) { finish(false); }
+            }
+        }
     </script>
 </body>
 </html>

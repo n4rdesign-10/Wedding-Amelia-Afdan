@@ -44,7 +44,6 @@
             line-height: 1.6;
         }
 
-        /* Prevent Scroll while Modal Active */
         body.modal-open {
             overflow: hidden;
         }
@@ -73,7 +72,6 @@
             pointer-events: none;
         }
 
-        /* Container Limit for Mobile Experience */
         .wrapper {
             max-width: 480px;
             margin: 0 auto;
@@ -105,7 +103,7 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
 
-        /* Header Cover */
+        /* Hero Cover */
         .hero {
             height: 100vh;
             display: flex;
@@ -237,6 +235,84 @@
             font-size: 3rem;
             color: var(--accent-gold);
             margin: 20px 0;
+        }
+
+        /* STYLES: STORY TIMELINE (MOMEN AWAL BERTEMU) */
+        .timeline {
+            position: relative;
+            padding: 10px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 2px;
+            background: var(--border-gold);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 35px;
+        }
+
+        .timeline-badge {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--card-bg);
+            border: 2px solid var(--accent-gold);
+            color: var(--accent-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px auto;
+            font-size: 0.85rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .timeline-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-gold);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: left;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .timeline-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .timeline-date {
+            font-family: var(--font-heading);
+            font-size: 0.8rem;
+            color: var(--accent-gold);
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .timeline-title {
+            font-size: 1.1rem;
+            color: #ffffff;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .timeline-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.5;
         }
 
         /* Photo Gallery Styling */
@@ -408,7 +484,7 @@
             text-transform: uppercase;
         }
 
-        /* 2. AMPLOP DIGITAL */
+        /* Amplop Digital */
         .gift-card {
             background-color: var(--card-bg);
             border: 1px solid var(--border-gold);
@@ -452,7 +528,7 @@
             color: #000;
         }
 
-        /* 3. FORM RSVP & UCAPAN */
+        /* Form RSVP */
         .form-rsvp {
             background-color: var(--card-bg);
             border: 1px solid var(--border-gold);
@@ -524,7 +600,6 @@
             color: #fff;
         }
 
-        /* Footer */
         .footer {
             padding: 50px 20px;
             text-align: center;
@@ -542,7 +617,7 @@
 </head>
 <body class="modal-open">
 
-    <!-- 1. COVER MODAL PEMBUKA -->
+    <!-- COVER MODAL PEMBUKA -->
     <div id="cover-modal">
         <div class="hero-title" style="margin-bottom: 10px;">The Wedding Of</div>
         <div class="couple-names-hero" style="font-size: 3.2rem;">Amelia & Afdan</div>
@@ -618,45 +693,81 @@
             </div>
         </section>
 
-        <!-- GALERI FOTO (PHOTO GALLERY SECTION) -->
+        <!-- TAMBAHAN BARU: STORY TIMELINE (KISAH PERJALANAN KAMI) -->
+        <section class="section">
+            <h2 class="section-title" data-aos="fade-up">Kisah Perjalanan</h2>
+            <p class="section-subtitle" data-aos="fade-up">Bagaimana Cerita Kami Dimulai</p>
+
+            <div class="timeline">
+                <!-- Momen 1: Awal Pertemuan -->
+                <div class="timeline-item" data-aos="fade-up">
+                    <div class="timeline-badge"><i class="fas fa-coffee"></i></div>
+                    <div class="timeline-card">
+                        <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80&w=600" alt="Pertemuan Pertama" class="timeline-img">
+                        <div class="timeline-date">Januari 2022</div>
+                        <div class="timeline-title">Pertemuan Pertama</div>
+                        <p class="timeline-desc">
+                            Takdir mempertemukan kami pertama kali di sebuah kedai kopi. Percakapan singkat yang sederhana tumbuh menjadi awal dari kisah panjang yang berharga.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Momen 2: Mengikat Janji / Lamaran -->
+                <div class="timeline-item" data-aos="fade-up">
+                    <div class="timeline-badge"><i class="fas fa-ring"></i></div>
+                    <div class="timeline-card">
+                        <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&q=80&w=600" alt="Momen Lamaran" class="timeline-img">
+                        <div class="timeline-date">Mei 2025</div>
+                        <div class="timeline-title">Lamaran & Komitmen</div>
+                        <p class="timeline-desc">
+                            Setelah melewati berbagai momen dan tumbuh bersama, kami memutuskan untuk melangkah ke jenjang yang lebih serius dengan restu dari kedua keluarga.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Momen 3: Menuju Pernikahan -->
+                <div class="timeline-item" data-aos="fade-up">
+                    <div class="timeline-badge"><i class="fas fa-church"></i></div>
+                    <div class="timeline-card">
+                        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=600" alt="Pernikahan" class="timeline-img">
+                        <div class="timeline-date">Oktober 2026</div>
+                        <div class="timeline-title">Pernikahan Impian</div>
+                        <p class="timeline-desc">
+                            Hari di mana kami menyatukan dua janji dalam ikatan suci pernikahan, siap mengarungi masa depan bersama selamanya.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- GALERI FOTO -->
         <section class="section" style="background-color: var(--card-bg);">
             <h2 class="section-title" data-aos="fade-up">Galeri Foto</h2>
             <p class="section-subtitle" data-aos="fade-up">Momen Bahagia Kami</p>
 
             <div class="gallery-grid" data-aos="fade-up">
-                <!-- Foto 1 (Wide) -->
                 <a href="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=1000" class="glightbox gallery-item wide">
-                    <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=600" alt="Momen Prewedding 1">
+                    <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=600" alt="Prewedding 1">
                     <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
                 </a>
-                
-                <!-- Foto 2 -->
                 <a href="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&q=80&w=1000" class="glightbox gallery-item">
-                    <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&q=80&w=400" alt="Momen Prewedding 2">
+                    <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&q=80&w=400" alt="Prewedding 2">
                     <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
                 </a>
-
-                <!-- Foto 3 -->
                 <a href="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&q=80&w=1000" class="glightbox gallery-item">
-                    <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&q=80&w=400" alt="Momen Prewedding 3">
+                    <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&q=80&w=400" alt="Prewedding 3">
                     <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
                 </a>
-
-                <!-- Foto 4 -->
                 <a href="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&q=80&w=1000" class="glightbox gallery-item">
-                    <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&q=80&w=400" alt="Momen Prewedding 4">
+                    <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&q=80&w=400" alt="Prewedding 4">
                     <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
                 </a>
-
-                <!-- Foto 5 -->
                 <a href="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&q=80&w=1000" class="glightbox gallery-item">
-                    <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&q=80&w=400" alt="Momen Prewedding 5">
+                    <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&q=80&w=400" alt="Prewedding 5">
                     <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
                 </a>
-
-                <!-- Foto 6 (Wide) -->
                 <a href="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&q=80&w=1000" class="glightbox gallery-item wide">
-                    <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&q=80&w=600" alt="Momen Prewedding 6">
+                    <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&q=80&w=600" alt="Prewedding 6">
                     <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
                 </a>
             </div>
@@ -690,7 +801,6 @@
             <h2 class="section-title" data-aos="fade-up">Waktu & Tempat</h2>
             <p class="section-subtitle" data-aos="fade-up">Rangkaian Acara Pernikahan</p>
 
-            <!-- Akad Nikah -->
             <div class="event-card" data-aos="fade-up">
                 <div class="event-name">Akad Nikah</div>
                 <div class="event-info">
@@ -707,7 +817,6 @@
                 </div>
             </div>
 
-            <!-- Resepsi -->
             <div class="event-card" data-aos="fade-up">
                 <div class="event-name">Resepsi Pernikahan</div>
                 <div class="event-info">
@@ -724,7 +833,6 @@
                 </div>
             </div>
 
-            <!-- Google Maps Embed Block -->
             <div class="map-box" data-aos="fade-up">
                 <iframe 
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126920.24097831038!2d106.759478!3d-6.2297465!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f3e945e34b9d%3A0x5371bf0fdad786a2!2sJakarta%2C%20Indonesia!5e0!3m2!1sid!2sid!4v1680000000000!5m2!1sid!2sid" 
@@ -738,7 +846,7 @@
             </a>
         </section>
 
-        <!-- 2. AMPLOP DIGITAL SECTION -->
+        <!-- AMPLOP DIGITAL SECTION -->
         <section class="section">
             <h2 class="section-title" data-aos="fade-up">Amplop Digital</h2>
             <p class="section-subtitle" data-aos="fade-up">Tanda Kasih & Hadiah</p>
@@ -762,7 +870,7 @@
             </div>
         </section>
 
-        <!-- 3. FORM RSVP & UCAPAN SECTION -->
+        <!-- FORM RSVP & UCAPAN SECTION -->
         <section class="section" style="background-color: var(--card-bg);">
             <h2 class="section-title" data-aos="fade-up">RSVP & Ucapan</h2>
             <p class="section-subtitle" data-aos="fade-up">Konfirmasi Kehadiran</p>
@@ -789,9 +897,7 @@
                     <button type="submit" class="btn-gold" style="width: 100%; border-radius: 8px;">Kirim Ucapan</button>
                 </form>
 
-                <!-- Container Hasil Ucapan -->
                 <div class="ucapan-list" id="ucapan-container">
-                    <!-- Ucapan default/contoh -->
                     <div class="ucapan-item">
                         <div class="ucapan-header">
                             <span class="ucapan-nama">Budi Santoso</span>
@@ -813,9 +919,8 @@
 
     </div>
 
-    <!-- AOS Animation Script -->
+    <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-    <!-- GLightbox JS (Modal Popup Galeri) -->
     <script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script>
     
     <script>
@@ -824,14 +929,12 @@
             once: true
         });
 
-        // GLightbox Initialization
         const lightbox = GLightbox({
             touchNavigation: true,
             loop: true,
             autoplayVideos: true
         });
 
-        // Audio Control Script
         const audio = document.getElementById("bg-music");
         const audioIcon = document.getElementById("audio-icon");
         let isPlaying = false;
@@ -849,19 +952,16 @@
             isPlaying = !isPlaying;
         }
 
-        // 1. FUNGSI BUKA UNDANGAN (COVER MODAL)
         function bukaUndangan() {
             const modal = document.getElementById("cover-modal");
             modal.classList.add("hide");
             document.body.classList.remove("modal-open");
             
-            // Otomatis Play Musik saat tombol ditekan
             if (!isPlaying) {
                 toggleAudio();
             }
         }
 
-        // 2. FUNGSI SALIN NO REKENING
         function salinRekening(elementId, btn) {
             const teks = document.getElementById(elementId).innerText;
             navigator.clipboard.writeText(teks).then(() => {
@@ -875,7 +975,6 @@
             });
         }
 
-        // 3. FUNGSI FORM RSVP
         function handleFormSubmit(e) {
             e.preventDefault();
             const nama = document.getElementById('nama').value;
@@ -897,7 +996,6 @@
             document.getElementById('rsvp-form').reset();
         }
 
-        // Countdown Timer Logic
         const weddingDate = new Date("October 24, 2026 08:00:00").getTime();
 
         const timer = setInterval(function() {
